@@ -3,12 +3,13 @@ pipeline {
         docker {
             image 'maven:3-alpine'
             args '--security-opt seccomp=unconfined'
+            registryUrl 'http://repo1.maven.org/maven2'
         }
     }
     stages {
         stage('Build') {
             steps {
-                sh 'mvn compile -DskipTests'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
